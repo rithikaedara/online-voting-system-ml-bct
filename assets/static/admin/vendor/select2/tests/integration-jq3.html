@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="vendor/qunit-1.23.1.css" type="text/css" />
+    <link rel="stylesheet" href="../../dist/css/select2.css" type="text/css" />
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <script src="vendor/qunit-1.23.1.js" type="text/javascript"></script>
+    <script src="vendor/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="../dist/js/select2.full.js" type="text/javascript"></script>
+
+    <script src="helpers.js" type="text/javascript"></script>
+
+    <script src="integration/dom-changes.js" type="text/javascript"></script>
+    <script src="integration/jquery-calls.js" type="text/javascript"></script>
+    <script src="integration/select2-methods.js" type="text/javascript"></script>
+  </body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <script>
+                swal({
+                    title: "Warning!",
+                    text: "{{ message }}",
+                    icon: "warning",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <script>
+                swal({
+                    title: "Info :)",
+                    text: "{{ message }}",
+                    icon: "info",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <script>
+                swal({
+                    title: "Error :)",
+                    text: "{{ message }}",
+                    icon: "error",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <script>
+                swal({
+                    title: "Success :)",
+                    text: "{{ message }}",
+                    icon: "success",
+                    button: "OK",
+                });
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+</html>

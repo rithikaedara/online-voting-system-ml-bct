@@ -1,0 +1,340 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>OnlineVoting</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-XNBwEF0D/UVt7pl/2PkjtkivTPhZc4ob6HfHvPi5nqRvBC9GBMij7z0Rg6TElZFP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+     
+    </style>
+</head>
+
+<body>
+    
+    <div class="container-fluid bg-dark py-2 d-none d-md-flex">
+        <div class="container">
+            <div class="d-flex justify-content-between topbar">
+                <div id="note" class="text-secondary col-12 mx-auto d-none d-xl-flex"><small style="font-size:20px;">Your vote is your voice. Use it to make a difference.</small></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid bg-primary">
+        <div class="container">
+            <nav class="navbar navbar-dark navbar-expand-lg py-0">
+                <a href="{% url 'index' %}" class="navbar-brand">
+                    <h1 class="text-white fw-bold d-block">Digital<span class="text-secondary">Ballot</span> </h1>
+                </a>
+                <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse bg-transparent" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto mx-xl-auto p-0">
+                        <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                        <a href="{% url 'elections' %}" class="nav-item nav-link ">Elections</a>
+                        <a href="{% url 'voter_results' %}" class="nav-item nav-link">Results</a>
+                        <a href="{% url 'admin_login' %}" class="nav-item nav-link">Admin</a>
+                        <a href="{% url 'predict_election' %}" class="nav-item nav-link active">Predict</a>
+
+                        <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+                </div>
+                <div class="d-none d-xl-flex flex-shirink-0">
+                    <div id="phone-tada" class="d-flex align-items-center justify-content-center me-4">
+                        <a href="" class="position-relative animated  tada infinite btn btn-danger">
+                            Cast Your Vote <img src="{% static 'img/vote.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <style>
+        .form-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+          max-width: 800px;
+          margin: 0 auto;
+        }
+      
+        .form-group {
+          display: flex;
+          flex-direction: column;
+        }
+      
+        label {
+          margin-bottom: 5px;
+          color: #333;
+        }
+      
+        input[type="number"] {
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          transition: border-color 0.3s ease;
+        }
+      
+        input[type="number"]:focus {
+          border-color: #4CAF50;
+          outline: none;
+        }
+      
+        input[type="submit"] {
+          grid-column: span 2;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          padding: 12px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+      
+        input[type="submit"]:hover {
+          background-color: #45a049;
+        }
+      
+        h1 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 30px;
+        }
+      
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      
+        .form-group {
+          animation: fadeIn 0.5s ease-out forwards;
+        }
+      </style>
+      
+      <h1>Election Prediction Form</h1>
+      <form method="post" class="form-grid">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="party">Party:</label>
+          <input type="number" id="party" name="party" required>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender (1 for Male, 2 for Female):</label>
+          <input type="number" id="gender" name="gender" required>
+        </div>
+        <div class="form-group">
+          <label for="criminal_cases">Criminal Cases:</label>
+          <input type="number" id="criminal_cases" name="criminal_cases" required>
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" step="0.1" id="age" name="age" required>
+        </div>
+        <div class="form-group">
+          <label for="category">Category:</label>
+          <input type="number" id="category" name="category" required>
+        </div>
+        <div class="form-group">
+          <label for="education">Education:</label>
+          <input type="number" id="education" name="education" required>
+        </div>
+        <div class="form-group">
+          <label for="total_votes">Total Votes:</label>
+          <input type="number" id="total_votes" name="total_votes" required>
+        </div>
+        <div class="form-group">
+          <label for="total_electors">Total Electors:</label>
+          <input type="number" id="total_electors" name="total_electors" required>
+        </div>
+        <div class="form-group">
+          <label for="assets">Assets:</label>
+          <input type="number" step="0.01" id="assets" name="assets" required>
+        </div>
+        <div class="form-group">
+          <label for="liabilities">Liabilities:</label>
+          <input type="number" step="0.01" id="liabilities" name="liabilities" required>
+        </div>
+        <input type="submit" value="Predict">
+      </form><br>
+      
+      <style>
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      
+        @keyframes glowPulse {
+          0% {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+          }
+          50% {
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+          }
+          100% {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+          }
+        }
+      
+        .result-container {
+          text-align: center;
+          margin-top: 30px;
+          padding: 20px;
+          background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+          border-radius: 10px;
+          animation: fadeInScale 0.5s ease-out, glowPulse 2s infinite;
+        }
+      
+        .result-title {
+          color: #2c3e50;
+          font-size: 24px;
+          margin-bottom: 15px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+        }
+      
+        .result-content {
+          font-size: 18px;
+          color: #34495e;
+          font-weight: bold;
+          padding: 10px;
+          background-color: rgba(255, 255, 255, 0.7);
+          border-radius: 5px;
+          display: inline-block;
+        }
+      </style>
+      
+      {% if result %}
+      <div class="result-container">
+        <h2 class="result-title">Prediction Result</h2>
+        <p class="result-content">{{ result }}</p>
+      </div>
+      {% endif %}
+      
+      
+
+
+    <div class="container-fluid footer bg-dark wow fadeIn" data-wow-delay=".3s">
+        <div class="container pt-5 pb-4">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <a href="{% url 'index' %}">
+                        <h1 class="text-white fw-bold d-block">Digital<span class="text-secondary">Ballot</span> </h1>
+                    </a>
+                    <p class="mt-4 text-light">Revolutionizing democracy with a modern, accessible, and secure online voting solution for all.</p>
+                    <div class="d-flex hightech-link">
+                        <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-facebook-f text-primary"></i></a>
+                        <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-twitter text-primary"></i></a>
+                        <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-instagram text-primary"></i></a>
+                        <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-0"><i class="fab fa-linkedin-in text-primary"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <a href="#" class="h3 text-secondary">Short Link</a>
+                    <div class="mt-4 d-flex flex-column short-link">
+                        <a href="" class="mb-2 text-white"><i class="fas fa-angle-right text-secondary me-2"></i>About us</a>
+                        <a href="" class="mb-2 text-white"><i class="fas fa-angle-right text-secondary me-2"></i>Contact us</a>
+                        <a href="" class="mb-2 text-white"><i class="fas fa-angle-right text-secondary me-2"></i>Our Services</a>
+                        
+                       
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <a href="#" class="h3 text-secondary">Contact Us</a>
+                    <div class="text-white mt-4 d-flex flex-column contact-link">
+                        <a href="#" class="pb-3 text-light border-bottom border-primary"><i class="fas fa-map-marker-alt text-secondary me-2"></i>  Pedhakakani Mandal, Guntur, Andhra Pradesh 522508</a>
+                        <a href="#" class="py-3 text-light border-bottom border-primary"><i class="fas fa-phone-alt text-secondary me-2"></i> 99**** ****99</a>
+                        <a href="#" class="py-3 text-light border-bottom border-primary"><i class="fas fa-envelope text-secondary me-2"></i> info@vvit.in</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="text-light mt-5 mb-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="text-light"><a href="#" class="text-secondary"><i class="fas fa-copyright text-secondary me-2"></i>DigitalBallot</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    
+                    <span class="text-light">Designed By and Distributed By <a href="https://vvit.in">vvit</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="#" class="btn btn-secondary btn-square rounded-circle back-to-top"><i class="fa fa-arrow-up text-white"></i></a>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <script>
+                swal({
+                    title: "Warning!",
+                    text: "{{ message }}",
+                    icon: "warning",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <script>
+                swal({
+                    title: "Info :)",
+                    text: "{{ message }}",
+                    icon: "info",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <script>
+                swal({
+                    title: "Error :)",
+                    text: "{{ message }}",
+                    icon: "error",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <script>
+                swal({
+                    title: "Success :)",
+                    text: "{{ message }}",
+                    icon: "success",
+                    button: "OK",
+                });
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+</html>

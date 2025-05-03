@@ -1,0 +1,390 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>OnlineVoting</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-XNBwEF0D/UVt7pl/2PkjtkivTPhZc4ob6HfHvPi5nqRvBC9GBMij7z0Rg6TElZFP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <style>
+    .upload-section {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    
+    .upload-heading {
+      text-align: center;
+      color: #495057;
+      margin-bottom: 20px;
+    }
+    
+    .upload-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .upload-btn:hover {
+      background-color: #0056b3;
+    }
+    
+    
+    .form-control:focus {
+      box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .centered-image {
+      display: block; 
+      margin: 0 auto; 
+      max-width: 100%; 
+    }
+    
+    .upload-heading {
+      font-size: 24px;
+      color: #2a2a72;
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #dedede;
+    }
+    #startCamera {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    #capture {
+      background-color: #f44336;
+      color: white;
+    }
+    
+    #retake {
+      background-color: #ff9800;
+      color: white;
+    }
+    
+    #submitImage {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+.instruction-step {
+    font-family: 'Nunito', sans-serif; /* Setting a friendly and readable font */
+    font-size: 16px; /* Appropriate font size for readability */
+    color: #4A90E2; /* A calming, noticeable blue color */
+    background-color: #EAF1F8; /* A light blue background for soft contrast */
+    padding: 15px; /* Padding to make the text less cramped */
+    border-left: 5px solid #2A69AC; /* A darker blue border on the left for emphasis */
+    margin: 20px 0; /* Margin for proper spacing around the paragraph */
+    border-radius: 5px; /* Slightly rounded corners for a modern look */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    line-height: 1.5; /* Line height for better readability */
+    text-align: center; /* Center alignment to draw attention */
+}
+
+  </style>
+</head>
+
+<body>
+    
+  <div class="container-fluid bg-dark py-2 d-none d-md-flex">
+      <div class="container">
+          <div class="d-flex justify-content-between topbar">
+              <div id="note" class="text-secondary col-12 mx-auto d-none d-xl-flex"><small style="font-size:20px;">Your vote is your voice. Use it to make a difference.</small></div>
+          </div>
+      </div>
+  </div>
+  
+  <div class="container-fluid bg-primary">
+      <div class="container">
+          <nav class="navbar navbar-dark navbar-expand-lg py-0">
+              <a href="{% url 'index' %}" class="navbar-brand">
+                  <h1 class="text-white fw-bold d-block">Digital<span class="text-secondary">Ballot</span> </h1>
+              </a>
+              <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse bg-transparent" id="navbarCollapse">
+                  <div class="navbar-nav ms-auto mx-xl-auto p-0">
+                      <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                      <a href="{% url 'elections' %}" class="nav-item nav-link active">Elections</a>
+                      <a href="{% url 'voter_results' %}" class="nav-item nav-link">Results</a>
+                      <a href="{% url 'admin_login' %}" class="nav-item nav-link">Admin</a>
+                      <a href="{% url 'predict_election' %}" class="nav-item nav-link">Predict</a>
+
+                      <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                  </div>
+              </div>
+              <div class="d-none d-xl-flex flex-shirink-0">
+                  <div id="phone-tada" class="d-flex align-items-center justify-content-center me-4">
+                      <a href="" class="position-relative   tada infinite btn btn-danger">
+                          Cast Your Vote <img src="{% static 'img/vote.png' %}" alt="">
+                      </a>
+                  </div>
+              </div>
+          </nav>
+      </div>
+  </div>
+ 
+    <div class="container">
+      <div class="row justify-content-center ">
+        <div class="col-md-6 mt-2">
+          <div class="upload-section">
+            <h2 class="upload-heading">Upload Your Image</h2>
+            <p class="instruction-step">This is step 2: Please take a picture of yourself very clearly and upload it.</p>
+
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+              {% csrf_token %}
+              <div class="mb-3 text-center">
+                <video id="webcam" autoplay playsinline width="100%" height="240" style="display:none;"></video>
+                <canvas id="canvas" width="100%" height="240" style="display:none;"></canvas>
+                <img id="capturedImage" src="#" alt="" style="display:none;" class="centered-image">
+                <button type="button" id="startCamera" class="btn btn-primary my-2">Open Webcam</button>
+                <button type="button" id="capture" class="btn btn-secondary my-2 col-12" style="display:none;">Capture</button>
+                <button type="button" id="retake" class="btn btn-info my-2 col-12" style="display:none;">Retake</button>
+                <input type="hidden" name="imageData" id="imageData">
+                <button type="submit" id="submitImage" class="btn btn-success my-2 col-12" style="display:none;">Submit</button>
+              </div>
+            </form>
+          </div>
+          
+          <script>
+            const startCamera = document.getElementById('startCamera');
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('canvas');
+            const captureButton = document.getElementById('capture');
+            const retakeButton = document.getElementById('retake');
+            const submitButton = document.getElementById('submitImage');
+            const capturedImage = document.getElementById('capturedImage');
+            const imageDataInput = document.getElementById('imageData');
+            let streamStarted = false;
+            const constraints = {
+              video: true
+            };
+            
+            startCamera.addEventListener('click', function() {
+              if (!streamStarted) {
+                navigator.mediaDevices.getUserMedia(constraints)
+                .then(function(stream) {
+                  video.srcObject = stream;
+                  video.style.display = 'block';
+                  captureButton.style.display = 'block';
+                  startCamera.style.display = 'none';
+                  streamStarted = true;
+                })
+                .catch(function(error) {
+                  console.error("Error opening webcam", error);
+                });
+              }
+            });
+            
+            captureButton.addEventListener('click', function() {
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
+              const context = canvas.getContext('2d');
+              context.drawImage(video, 0, 0);
+              video.style.display = 'none';
+              captureButton.style.display = 'none';
+              
+              const imageData = canvas.toDataURL('image/png');
+              imageDataInput.value = imageData; // Storing image data in hidden input
+              
+              capturedImage.src = imageData;
+              capturedImage.style.display = 'block';
+              retakeButton.style.display = 'block';
+              submitButton.style.display = 'block';
+            });
+            
+            retakeButton.addEventListener('click', function() {
+              video.style.display = 'block';
+              captureButton.style.display = 'block';
+              capturedImage.style.display = 'none';
+              retakeButton.style.display = 'none';
+              submitButton.style.display = 'none';
+            });
+            
+            
+            
+          </script>
+          
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+    {% if messages %} 
+    {% for message in messages %} 
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <script>
+      swal({
+        title: "Error :(",
+        text: "{{message}}",
+        icon: "error",
+        button: "OK",
+      });
+    </script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <script>
+      swal({
+        title: "Success :)",
+        text: "{{message}}",
+        icon: "success",
+        button: "OK",
+      });
+    </script>
+    
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+    <script>
+      swal({
+        title: "Info :(",
+        text: "{{message}}",
+        icon: "info",
+        button: "OK",
+      });
+    </script>
+    
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+    <script>
+      swal({
+        title: "Warning :(",
+        text: "{{message}}",
+        icon: "warning",
+        button: "OK",
+      });
+    </script>
+    
+    {% endif %} 
+    {% endfor %} 
+    {% endif %}
+    
+   
+    <div class="container-fluid footer bg-dark wow fadeIn" data-wow-delay=".3s">
+      <div class="container pt-5 pb-4">
+          <div class="row g-5">
+              <div class="col-lg-4 col-md-6">
+                  <a href="{% url 'index' %}">
+                      <h1 class="text-white fw-bold d-block">Digital<span class="text-secondary">Ballot</span> </h1>
+                  </a>
+                  <p class="mt-4 text-light">Revolutionizing democracy with a modern, accessible, and secure online voting solution for all.</p>
+                  <div class="d-flex hightech-link">
+                      <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-facebook-f text-primary"></i></a>
+                      <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-twitter text-primary"></i></a>
+                      <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-instagram text-primary"></i></a>
+                      <a href="" class="btn-light nav-fill btn btn-square rounded-circle me-0"><i class="fab fa-linkedin-in text-primary"></i></a>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                  <a href="#" class="h3 text-secondary">Short Link</a>
+                  <div class="mt-4 d-flex flex-column short-link">
+                      <a href="" class="mb-2 text-white"><i class="fas fa-angle-right text-secondary me-2"></i>About us</a>
+                      <a href="" class="mb-2 text-white"><i class="fas fa-angle-right text-secondary me-2"></i>Contact us</a>
+                      
+                      
+                     
+                  </div>
+              </div>
+              
+              <div class="col-lg-4 col-md-6">
+                  <a href="#" class="h3 text-secondary">Contact Us</a>
+                  <div class="text-white mt-4 d-flex flex-column contact-link">
+                      <a href="#" class="pb-3 text-light border-bottom border-primary"><i class="fas fa-map-marker-alt text-secondary me-2"></i>  Pedhakakani Mandal, Guntur, Andhra Pradesh 522508</a>
+                      <a href="#" class="py-3 text-light border-bottom border-primary"><i class="fas fa-phone-alt text-secondary me-2"></i> 9959382287</a>
+                      <a href="#" class="py-3 text-light border-bottom border-primary"><i class="fas fa-envelope text-secondary me-2"></i> info@vvit.in</a>
+                  </div>
+              </div>
+          </div>
+          <hr class="text-light mt-5 mb-4">
+          <div class="row">
+              <div class="col-md-6 text-center text-md-start">
+                  <span class="text-light"><a href="#" class="text-secondary"><i class="fas fa-copyright text-secondary me-2"></i>DigitalBallot</a>, All right reserved.</span>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                  
+                  <span class="text-light">Designed By and Distributed By <a href="https://vvit.in">vvit</a></span>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <a href="#" class="btn btn-secondary btn-square rounded-circle back-to-top"><i class="fa fa-arrow-up text-white"></i></a>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <script>
+                swal({
+                    title: "Warning!",
+                    text: "{{ message }}",
+                    icon: "warning",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <script>
+                swal({
+                    title: "Info :)",
+                    text: "{{ message }}",
+                    icon: "info",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <script>
+                swal({
+                    title: "Error :)",
+                    text: "{{ message }}",
+                    icon: "error",
+                    button: "OK",
+                });
+            </script>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <script>
+                swal({
+                    title: "Success :)",
+                    text: "{{ message }}",
+                    icon: "success",
+                    button: "OK",
+                });
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+</html>

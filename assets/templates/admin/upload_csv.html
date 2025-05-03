@@ -1,0 +1,462 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="{% static 'main/images/logo.png' %}" rel="icon">
+    <title>Admin Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="{% static 'admin/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'admin/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'admin/css/ruang-admin.min.css' %}" rel="stylesheet">
+    <script src="{% static 'main/js/sweetalert.min.js' %}"></script>
+    <style>
+        .voter-registration-container {
+            max-width: 700px;
+            margin:  auto;
+            padding: 20px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            background-color: #ffffff;
+            background-image: linear-gradient(120deg, #ffffff 0%, #e9ecef 100%);
+            border: 1px solid #dee2e6;
+        }
+        
+        .voter-registration-heading {
+            font-size: 28px;
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            background: linear-gradient(to right, #007bff, #6610f2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .voter-input-field label {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .voter-input-field input {
+            font-size: 16px;
+            padding: 10px;
+            border: 2px solid #ced4da;
+            transition: border-color 0.3s ease;
+        }
+        
+        .voter-input-field input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+        }
+        
+        .voter-file-input {
+            transition: background-color 0.3s ease;
+        }
+        
+        .voter-file-input:hover {
+            background-color: #e9ecef;
+        }
+        
+        .voter-submit-btn {
+            width: 100%;
+            background-image: linear-gradient(45deg, #007bff, #6f42c1);
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 7px;
+            transition: background-image 0.4s ease;
+            color: white;
+        }
+        
+        .voter-submit-btn:hover {
+            background-image: linear-gradient(45deg, #0056b3, #5a30b5);
+        }
+
+        .upload-section {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+          }
+          
+          .upload-heading {
+            text-align: center;
+            color: #495057;
+            margin-bottom: 20px;
+          }
+          
+          .upload-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+          }
+          
+          .upload-btn:hover {
+            background-color: #0056b3;
+          }
+          
+          
+          .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+          }
+          
+          .centered-image {
+            display: block; 
+            margin: 0 auto; 
+            max-width: 100%; 
+          }
+          
+          .upload-heading {
+            font-size: 24px;
+            color: #2a2a72;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dedede;
+          }
+          #startCamera {
+            background-color: #4CAF50;
+            color: white;
+          }
+          
+          #capture {
+            background-color: #f44336;
+            color: white;
+          }
+          
+          #retake {
+            background-color: #ff9800;
+            color: white;
+          }
+          
+          #submitImage {
+            background-color: #2196F3;
+            color: white;
+          }
+    </style>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+                <div class="sidebar-brand-icon">
+                    <img src="{% static 'admin/img/logo/logo2.png' %}">
+                </div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin_dashboard' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap1"
+                    aria-expanded="true" aria-controls="collapseBootstrap">
+                    <i class="fas fa-fw fa-vote-yea"></i>
+                    <span>Voters Management</span>
+                </a>
+                <div id="collapseBootstrap1" class="collapse show" aria-labelledby="headingBootstrap"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item active" href="{% url 'add_voters' %}">Add Voters</a>
+                    <a class="collapse-item" href="{% url 'manage_voters' %}">Manage Voters</a>
+                    
+                </div>
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+            aria-expanded="true" aria-controls="collapseBootstrap">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Election Management</span>
+        </a>
+        <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
+        data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{% url 'admin_add_election' %}">Add Election</a>
+            <a class="collapse-item" href="{% url 'admin_add_candidates' %}">Add Candidate</a>
+            <a class="collapse-item" href="{% url 'admin_view_elections' %}">View Elections</a>
+            
+        </div>
+    </div>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" href="{% url 'admin_results' %}" data-toggle="" data-target="#collapseForm" aria-expanded="true"
+    aria-controls="collapseForm">
+    <i class="fab fa-fw fa-wpforms"></i>
+    <span>Results</span>
+</a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link collapsed" href="{% url 'upload_csv' %}" data-toggle="" data-target="#collapseForm" aria-expanded="true"
+    aria-controls="collapseForm">
+    <i class="fab fa-fw fa-wpforms"></i>
+    <span>Upload data</span>
+  </a>
+  </li>
+<hr class="sidebar-divider">
+</ul>
+
+<!-- Sidebar -->
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- TopBar -->
+        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+            <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="navbar-nav ml-auto">
+                <div class="topbar-divider d-none d-sm-block"></div>
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img class="img-profile rounded-circle" src="{% static 'admin/img/boy.png' %}" style="max-width: 60px">
+                    <span class="ml-2 d-none d-lg-inline text-white small">Admin</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    
+                    
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'index' %}" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!-- Topbar -->
+    
+    <!-- Container Fluid-->
+    <div class="container-fluid" id="container-wrapper">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Add Voters</h1>
+            <ol class="breadcrumb">
+                <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
+                <li class="breadcrumb-item active" aria-current="page">/ Add Voters</li>
+            </ol>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="voter-registration-container">
+                <h1 class="voter-registration-heading">Bulk Voter Registration Portal</h1>
+           
+
+
+              
+                <div class="container d-flex justify-content-center align-items-center" >
+                    <div class="upload-card" style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); text-align: center; transition: transform 0.3s ease-in-out;">
+                        <h2 class="mb-4">Upload CSV File</h2>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="fileInput">📂 Choose CSV File</label>
+                            <input type="file" id="fileInput" name="csv_file" class="file-input" style="display: none;" required>
+                            <p id="fileName" class="mt-2 text-muted"></p>
+                            <button type="submit" class="upload-btn mt-3" style="background: linear-gradient(45deg, #ff416c, #ff4b2b); color: white; padding: 12px 20px; border: none; border-radius: 30px; font-size: 18px; transition: all 0.3s ease-in-out;">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            
+                <script>
+                    document.getElementById('fileInput').addEventListener('change', function(event) {
+                        const fileName = event.target.files[0] ? event.target.files[0].name : "No file chosen";
+                        document.getElementById('fileName').textContent = "Selected File: " + fileName;
+                    });
+            
+                    document.querySelector('.upload-card').addEventListener('mouseover', function() {
+                        this.style.transform = 'scale(1.05)';
+                    });
+            
+                    document.querySelector('.upload-card').addEventListener('mouseout', function() {
+                        this.style.transform = 'scale(1)';
+                    });
+            
+                    document.querySelector('.upload-btn').addEventListener('mouseover', function() {
+                        this.style.transform = 'scale(1.1)';
+                        this.style.boxShadow = '0px 4px 10px rgba(255, 75, 43, 0.5)';
+                    });
+            
+                    document.querySelector('.upload-btn').addEventListener('mouseout', function() {
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow = 'none';
+                    });
+                </script>
+
+                
+            </div>
+            
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </div>
+        <!--Row-->
+        <!-- Modal Logout -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                    <a href="{% url 'admin_login' %}" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!---Container Fluid-->
+</div>
+
+{% if messages %} 
+{% for message in messages %} 
+{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+<script>
+    swal({
+        title: "Error :(",
+        text: "{{message}}",
+        icon: "error",
+        button: "OK",
+    });
+</script>
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<script>
+    swal({
+        title: "Success :)",
+        text: "{{message}}",
+        icon: "success",
+        button: "OK",
+    });
+</script>
+
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+<script>
+    swal({
+        title: "Info :(",
+        text: "{{message}}",
+        icon: "info",
+        button: "OK",
+    });
+</script>
+
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+<script>
+    swal({
+        title: "Warning :(",
+        text: "{{message}}",
+        icon: "warning",
+        button: "OK",
+    });
+</script>
+
+{% endif %} 
+{% endfor %} 
+{% endif %}
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>copyright &  developed by
+                <b><a href="https://vvit.in/" target="_blank">vvit</a></b>
+            </span>
+        </div>
+    </div>
+</footer>
+<!-- Footer -->
+</div>
+</div>
+
+<!-- Scroll to top -->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<script src="{% static 'admin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'admin/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'admin/js/ruang-admin.min.js' %}"></script>
+<script src="{% static 'admin/vendor/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'admin/js/demo/chart-area-demo.js' %}"></script>  
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+{% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+<script>
+    swal({
+        title: "Warning!",
+        text: "{{ message }}",
+        icon: "warning",
+        button: "OK",
+    });
+</script>
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+<script>
+    swal({
+        title: "Info :)",
+        text: "{{ message }}",
+        icon: "info",
+        button: "OK",
+    });
+</script>
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+<script>
+    swal({
+        title: "Error :)",
+        text: "{{ message }}",
+        icon: "error",
+        button: "OK",
+    });
+</script>
+{% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<script>
+    swal({
+        title: "Success :)",
+        text: "{{ message }}",
+        icon: "success",
+        button: "OK",
+    });
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+</html>
